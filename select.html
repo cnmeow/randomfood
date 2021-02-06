@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style type="text/css">
+   	body {
+   		padding-top: 5px;
+   		background: #F7EDE2;
+   		 position:absolute;
+   		 left:50%;
+  transform: translate(-50%);
+  margin:0;
+  overflow-x:hidden;
+   	}
+    text{
+        font-family:Helvetica, Arial, sans-serif;
+        font-size:11px;
+        pointer-events:none;
+    }
+    #chart{
+    	position: relative;
+        width:300px;
+        height:300px;
+
+    }
+    #question{
+        position: relative;
+        width:200px;
+        height:300px;
+    }
+    #question h1{
+        font-size: 30px;
+        font-weight: bold;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        position: relative;
+        padding: 0;
+        margin: 0;
+        text-align: center;
+    }
+    #selectfd {
+
+  position: relative;
+  margin: -10px auto;
+  /* -height/2 */
+  width: 250px;
+  height: 330px;
+  background-color: #F5CAC3;
+  padding: 15px;
+  /* -1/2 height */
+    }
+    #menutxt {
+    	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    	font-size: 70px;
+    	color: #F28482;
+    	 display: block;
+    	 font-weight: bold;
+    	 text-align: center;
+    }
+    label {
+    	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    	font-size: 30px;
+    	color: #84A59D;
+    }
+
+    input[type=checkbox]
+{
+  -moz-transform: scale(2); /* FF */
+  -webkit-transform: scale(2); /* Safari and Chrome */
+  -o-transform: scale(2); /* Opera */
+  transform: scale(2);
+}
+#submitbtn {
+	position: relative;
+	 font-size: 30px;
+  /* -height/2 */
+  width: 100%;
+  height: 60px;
+  background-color: #F6BD60;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+ color: #F7EDE2;
+
+}
+    #think {
+    	height: 50%;
+    	width: 50%;
+    	left: 60px;
+    	position: relative;
+    }
+
+
+    </style>
+</head>
+
+<body>
+<img src = "think.gif" id = "think">
+	<label id = "menutxt"> MENU </label>
+	<br>
+	<div id = "selectfd">
+	  <input type="checkbox" id="op1" >
+	  <label for="op1">  Bò </label><br>
+	  <input type="checkbox" id="op2">
+	  <label for="op2">  Cá </label><br>
+	  <input type="checkbox" id="op3">
+	  <label for="op3">  Cua, ghẹ </label><br>
+	  <input type="checkbox" id="op4">
+	  <label for="op4">  Gà </label><br>
+	  <input type="checkbox" id="op5">
+	  <label for="op5">  Heo </label><br>
+	  <input type="checkbox" id="op6">
+	  <label for="op6">  Rau </label><br>
+	  <input type="checkbox" id="op7">
+	  <label for="op7">  Trứng </label><br>
+	  <input type="checkbox" id="op8">
+	  <label for="op8">  Tôm </label><br>
+	  <input type="checkbox" id="op9">
+	  <label for="op9">  Ốc </label><br><br>
+	</div>
+	<br>
+	<button id="submitbtn" onclick = "finish()"> XONG RỒI NÈKKK </button>
+	<br>
+	<script type="text/javascript">
+		function alerthuhu(idnum) {
+			if (document.getElementById(idnum).checked) 
+				alert("Tui hông biết ăn cái này huhuhu :'< ");
+			else alert("Thenk kiu huhu :>");
+		}
+	</script>
+
+	<div id="chart"></div>
+	<br>
+    <div id="question"><h1></h1></div>
+    
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script type="text/javascript" charset="utf-8">
+        var padding = {top:20, right:40, bottom:0, left:0},
+            w = 300 - padding.left - padding.right,
+            h = 300 - padding.top  - padding.bottom,
+            r = Math.min(w, h)/2,
+            rotation = 0,
+            oldrotation = 0,
+            picked = 100000,
+            oldpick = [],
+            color = d3.scale.category20();
+        var f = [["Bò sốt", "Lẩu bò", "Bò nướng", "Bò hấp sả", "Bò né", "Bún bò", "Thịt bò cuộn nấm"],
+				 ["Bánh canh chả cá", "Cá nướng", "Cá hấp", "Bún cá"],
+				 ["Bánh canh cua", "Ghẹ hấp", "Ghẹ nướng phô mai", "Lẩu cua", "Bún riêu", "Ghẹ rang me", "Súp cua"],
+				 ["Gà rán", "Gà nướng", "Lẩu gà lá é", "Cơm gà"],
+				 ["Bún nem", "Nem nướng", "Thịt nướng", "Thịt heo cuộn nấm"],
+				 ["Salad", "Gỏi"],
+				 ["Trứng tan", "Trứng cút lộn rang me", "Bánh tráng nướng", "Bột chiên"],
+				 ["Tôm nướng phô mai", "Tôm nướng", "Tôm hấp", "Lẩu tôm", "Bánh bột lọc nhân tôm"],
+				 ["Ốc luộc", "Ốc giác xào", "Bún ốc", "Ốc nướng"]];
+		var haha = [], data = [];
+		function finish() {
+			haha = [];
+			data = [];
+			document.getElementById("chart").innerHTML = "";
+	//		document.getElementById("question").innerHTML = "";
+			for (i = 1; i <= 9; ++i) {
+				slct = document.getElementById("op"+i);
+				if (slct.checked) {
+					f[i-1].forEach(dpfood);
+				}
+			}
+			haha.forEach(myfunc);
+        function myfunc(item, index) {
+        	var tmp = {};
+        	tmp["label"] = item;
+        	tmp["value"] = 1;
+        	tmp["question"] = item;
+        	data.push(tmp);
+        }
+
+        var svg = d3.select('#chart')
+            .append("svg")
+            .data([data])
+            .attr("width",  w + padding.left + padding.right)
+            .attr("height", h + padding.top + padding.bottom);
+
+        var container = svg.append("g")
+            .attr("class", "chartholder")
+            .attr("transform", "translate(" + (w/2 + padding.left) + "," + (h/2 + padding.top) + ")");
+
+        var vis = container
+            .append("g");
+            
+        var pie = d3.layout.pie().sort(null).value(function(d){return 1;});
+
+        // declare an arc generator function
+        var arc = d3.svg.arc().outerRadius(r);
+
+        // select paths, use arc generator to draw
+        var arcs = vis.selectAll("g.slice")
+            .data(pie)
+            .enter()
+            .append("g")
+            .attr("class", "slice");
+            
+
+        arcs.append("path")
+            .attr("fill", function(d, i){ return color(i); })
+            .attr("d", function (d) { return arc(d); });
+
+        // add the text
+        arcs.append("text").attr("transform", function(d){
+                d.innerRadius = 0;
+                d.outerRadius = r;
+                d.angle = (d.startAngle + d.endAngle)/2;
+                return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")translate(" + (d.outerRadius -10) +")";
+            })
+            .attr("text-anchor", "end")
+            .text( function(d, i) {
+                return data[i].label;
+            });
+
+        container.on("click", spin);
+
+
+        function spin(d){
+            
+            container.on("click", null);
+
+            //all slices have been seen, all done
+            console.log("OldPick: " + oldpick.length, "Data length: " + data.length);
+            if(oldpick.length == data.length){
+                console.log("done");
+                container.on("click", null);
+                return;
+            }
+
+            var  ps       = 360/data.length,
+                 pieslice = Math.round(1440/data.length),
+                 rng      = Math.floor((Math.random() * 1440) + 360);
+                
+            rotation = (Math.round(rng / ps) * ps);
+            
+            picked = Math.round(data.length - (rotation % 360)/ps);
+            picked = picked >= data.length ? (picked % data.length) : picked;
+
+
+            if(oldpick.indexOf(picked) !== -1){
+                d3.select(this).call(spin);
+                return;
+            } else {
+                oldpick.push(picked);
+            }
+
+            rotation += 90 - Math.round(ps/2);
+
+            vis.transition()
+                .duration(3000)
+                .attrTween("transform", rotTween)
+                .each("end", function(){
+
+                    //mark question as seen
+                    d3.select(".slice:nth-child(" + (picked + 1) + ") path")
+                        .attr("fill", "#111");
+
+                    //populate question
+                    d3.select("#question h1")
+                        .text(data[picked].question);
+
+                    oldrotation = rotation;
+                
+                    container.on("click", spin);
+                });
+        }
+
+        //make arrow
+        svg.append("g")
+            .attr("transform", "translate(" + (w + padding.left + padding.right) + "," + ((h/2)+padding.top) + ")")
+            .append("path")
+            .attr("d", "M-" + (r*.15) + ",0L0," + (r*.05) + "L0,-" + (r*.05) + "Z")
+            .style({"fill":"black"});
+
+        //draw spin circle
+        container.append("circle")
+            .attr("cx", 0)
+            .attr("cy", 0)
+            .attr("r", 10)
+            .style({"fill":"white","cursor":"pointer"});
+
+        //spin text
+        
+        function rotTween(to) {
+          var i = d3.interpolate(oldrotation % 360, rotation);
+          return function(t) {
+            return "rotate(" + i(t) + ")";
+          };
+        }
+        
+        
+        function getRandomNumbers(){
+            var array = new Uint16Array(1000);
+            var scale = d3.scale.linear().range([360, 1440]).domain([0, 100000]);
+
+            if(window.hasOwnProperty("crypto") && typeof window.crypto.getRandomValues === "function"){
+                window.crypto.getRandomValues(array);
+                console.log("works");
+            } else {
+                //no support for crypto, get crappy random numbers
+                for(var i=0; i < 1000; i++){
+                    array[i] = Math.floor(Math.random() * 100000) + 1;
+                }
+            }
+
+            return array;
+        }
+        alert("Vòng quay nằm ở dưới nhaaaa");
+		}
+		function dpfood(item) {
+			haha.push(item);
+		}
+
+   
+    </script>
+</body>
+</html>
+	

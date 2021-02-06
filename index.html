@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+    	body {
+   		padding-top: 20px;
+   		background: #F7EDE2;
+   		 position:absolute;
+   		 left:50%;
+  transform: translate(-50%);
+  margin:0;
+  overflow-x:hidden;
+   	}
+   	 br {
+        line-height: 150%;
+     }
+   	#hnag {
+   		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    	font-size: 70px;
+    	color: #F28482;
+    	 display: block;
+    	 font-weight: bold;
+    	 text-align: center;
+   	}
+
+   	button {
+   		background-color: #F6BD60;
+   		color: white;
+   		width: 100%;
+   		height: 50px;
+   		font-size: 20px;
+   	}
+   	#aboutme {
+   		display: none;
+   		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    	font-size: 20px;
+    	background-color: #F5CAC3;
+    	padding: 10px;
+    	width: 100%;
+    	height: auto;
+    	color: #84A59D;
+    	font-style: italic;
+   	}
+   </style>
+</head>
+<body>
+	<a id = "hnag"> 🐰 MUỐN ĂN GÌ ? </a>
+	<br>
+	<button id = "spin" onclick="location.href = 'spin.html'"> Ăn gì cũng được </button>
+	<br><br>
+	<button id = "select" onclick="location.href = 'select.html'"> Cũng vậy nhưng mà có chọn lọc hơn </button>
+	<br><br>
+	<button id = "abmbtn" onclick="displayabt()"> About this website </button>
+	<br><br>
+	<div id = "aboutme"> 
+		- Cẩm Nguyên đã code website bằng cả chái tym để cho 🐰 hông còn phải "ăn gì cũng được" nữa. <br><br>
+		- Phần "Ăn gì cũng được" sẽ random trên tất cả các món ăn <br><br>
+		- Phần có chọn lọc thì sẽ chọn những thứ mà 🐰 muốn ăn trước (bò, thịt, gà,...) rồi mới random trên những món làm từ mấy thứ được chọn 
+		
+	</div>
+	<br> 
+<img src="dance.gif" alt="Dacing bunny" id = "dance">
+	<img src="dance.gif" alt="Dacing bunny" id = "dance">
+	<script type="text/javascript">
+		var dpl = false;
+		function displayabt() {
+			if (dpl) {
+				document.getElementById('aboutme').style.display = "none";
+				dpl = false;
+			} else {
+				document.getElementById('aboutme').style.display = "block";
+				dpl = true;
+			}
+		}
+	</script>
+</body>
+	
+</html>
