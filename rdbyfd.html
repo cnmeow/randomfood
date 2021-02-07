@@ -59,7 +59,7 @@
     }
     label {
     	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    	font-size: 30px;
+    	font-size: 20px;
     	color: #84A59D;
     }
 
@@ -72,23 +72,40 @@
 }
 #submitbtn {
 	position: relative;
-	 font-size: 30px;
+	 font-size: 25px;
   /* -height/2 */
   width: 100%;
-  height: 60px;
+  height: 50px;
   background-color: #F6BD60;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
  color: #F7EDE2;
 
 }
     #think {
-    	height: 50%;
-    	width: 50%;
-    	left: 60px;
+    	height: 40%;
+    	width: 40%;
+    	left: 30%;
     	position: relative;
     }
+    #addfd {
 
-
+        height: 30px;
+        width: 100%;
+        font-size: 20px;
+    }
+    #addtxt {
+        font-size: 20px;
+    }
+    #addbtn{
+        position: relative;
+     font-size: 25px;
+  /* -height/2 */
+  width: 100%;
+  height: 50px;
+  background-color: #F6BD60;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+ color: #F7EDE2;
+    }
     </style>
 </head>
 
@@ -96,29 +113,13 @@
 <img src = "think.gif" id = "think">
 	<label id = "menutxt"> MENU </label>
 	<br>
-	<div id = "selectfd">
-	  <input type="checkbox" id="op1" >
-	  <label for="op1">  Bò </label><br>
-	  <input type="checkbox" id="op2">
-	  <label for="op2">  Cá </label><br>
-	  <input type="checkbox" id="op3">
-	  <label for="op3">  Cua, ghẹ </label><br>
-	  <input type="checkbox" id="op4">
-	  <label for="op4">  Gà </label><br>
-	  <input type="checkbox" id="op5">
-	  <label for="op5">  Heo </label><br>
-	  <input type="checkbox" id="op6">
-	  <label for="op6">  Rau </label><br>
-	  <input type="checkbox" id="op7">
-	  <label for="op7">  Trứng </label><br>
-	  <input type="checkbox" id="op8">
-	  <label for="op8">  Tôm </label><br>
-	  <input type="checkbox" id="op9">
-	  <label for="op9">  Ốc </label><br>
-      <input type="checkbox" id="op10">
-      <label for="op10">  Khác </label><br><br>
-	</div>
+	<div id = "selectfd"> </div>
 	<br>
+    <label id = "addtxt"> Thêm món khác </label>
+    <input id = "addfd"> 
+    <br> 
+    <button id="addbtn" onclick = "addfood()"> THÊM MÓN</button>
+    <br><br>
 	<button id="submitbtn" onclick = "finish()"> XONG RỒI NÈKKK </button>
 	<br>
 	<script type="text/javascript">
@@ -128,7 +129,6 @@
 			else alert("Thenk kiu huhu :>");
 		}
 	</script>
-
 	<div id="chart"></div>
 	<br>
     <div id="question"><h1></h1></div>
@@ -152,27 +152,55 @@
 				 ["Salad", "Gỏi"],
 				 ["Trứng tan", "Trứng cút lộn rang me", "Bánh tráng nướng", "Bột chiên"],
 				 ["Tôm nướng phô mai", "Tôm nướng", "Tôm hấp", "Lẩu tôm", "Bánh bột lọc nhân tôm"],
-				 ["Ốc luộc", "Ốc giác xào", "Bún ốc", "Ốc nướng"]];
-		var haha = [], data = [];
+				 ["Ốc luộc", "Ốc giác xào", "Bún ốc", "Ốc nướng"],
+                 []];
+		var haha = [], data = [], cnt = 0;
+        divsl = document.getElementById("selectfd");
+        for (i = 0; i <= 9; ++i) {
+            f[i].forEach(addcheckbox);
+        }
+        function addfood() {
+            var ip = document.getElementById('addfd').value;
+            ok = false;
+            for (i = 0; i < ip.length; ++i)
+                if (ip[i] != " ") {
+                    addcheckbox(ip);
+                    tmpcnt = cnt-1;
+                    document.getElementById("op"+tmpcnt).checked = true;
+                    ok = true;
+                    break;
+                }
+            if (!ok) alert("Nhập món ăn vào ô trống á :'<");
+        }
+        function addcheckbox(item) {
+            var cb = document.createElement('input'),
+                lb = document.createElement('label'), 
+                endl = document.createElement('br');
+            cb.type = "checkbox";
+            cb.id = "op"+cnt;
+            lb.for = "op" +cnt;
+            lb.innerHTML = "   "+item;
+            lb.id = "txt"+cnt;
+            divsl.append(cb);
+            divsl.append(lb);
+            divsl.append(endl);
+            ++cnt;
+        }
 		function finish() {
 			haha = [];
 			data = [];
 			document.getElementById("chart").innerHTML = "";
-	//		document.getElementById("question").innerHTML = "";
-			for (i = 1; i <= 9; ++i) {
-				slct = document.getElementById("op"+i);
-				if (slct.checked) {
-					f[i-1].forEach(dpfood);
-				}
-			}
-			haha.forEach(myfunc);
-        function myfunc(item, index) {
-        	var tmp = {};
-        	tmp["label"] = item;
-        	tmp["value"] = 1;
-        	tmp["question"] = item;
-        	data.push(tmp);
-        }
+            for (i = 0; i < cnt; ++i) {
+                slct = document.getElementById("op" + i);
+                if (slct.checked) {
+                    var tmp = {};
+                    idtxt = document.getElementById("txt"+i).innerHTML;
+                    tmp["label"] = idtxt;
+                    tmp["value"] = 1;
+                    tmp["question"] = idtxt;
+                    data.push(tmp);
+                }
+            }
 
         var svg = d3.select('#chart')
             .append("svg")
