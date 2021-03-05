@@ -115,8 +115,9 @@
 	  <label for="op8">  Tôm </label><br>
 	  <input type="checkbox" id="op9">
 	  <label for="op9">  Ốc </label><br>
-      <input type="checkbox" id="op10">
-      <label for="op10">  Khác </label><br><br>
+	  <input type="checkbox" id="op10">
+	  <label for="op10">  Fast food </label><br>
+     	 <br>
 	</div>
 	<br>
 	<button id="submitbtn" onclick = "finish()"> XONG RỒI NÈKKK </button>
@@ -152,14 +153,16 @@
 				 ["Salad", "Gỏi"],
 				 ["Trứng tan", "Trứng cút lộn rang me", "Bánh tráng nướng", "Bột chiên"],
 				 ["Tôm nướng phô mai", "Tôm nướng", "Tôm hấp", "Lẩu tôm", "Bánh bột lọc nhân tôm"],
-				 ["Ốc luộc", "Ốc giác xào", "Bún ốc", "Ốc nướng"]];
+				 ["Ốc luộc", "Ốc giác xào", "Bún ốc", "Ốc nướng"],
+				 ["Gà rán", "Hamburger", "Pizza"]
+		];
 		var haha = [], data = [];
 		function finish() {
 			haha = [];
 			data = [];
 			document.getElementById("chart").innerHTML = "";
 	//		document.getElementById("question").innerHTML = "";
-			for (i = 1; i <= 9; ++i) {
+			for (i = 1; i <= 10; ++i) {
 				slct = document.getElementById("op"+i);
 				if (slct.checked) {
 					f[i-1].forEach(dpfood);
