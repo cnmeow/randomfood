@@ -1,6 +1,8 @@
 # Web random đồ ăn để không phải "Ăn gì cũng được" anymore 😛 Code by @camnguyen with very bigggggg love <3
 # Try it: https://camnguyenmeow.github.io/what-my-bunny-want2eat/
 
+Code cho mấy bạn không quyết định được phải ăn gì như mình và 🐰 ...
+
 -Hướng dẫn sử dụng: 🐰 sẽ có 3 lựa chọn:
 
 +Ăn gì cũng được: Random trên mấy món mà 🐰 của mình thích. Quay trúng thì phải đi ăn chứ không đổi ý kiến nhe =))))
