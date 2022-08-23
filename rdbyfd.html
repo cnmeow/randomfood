@@ -122,13 +122,14 @@
 <img src = "think.gif" id = "think">
 	<label id = "menutxt"> MENU </label>
 	<br>
-	<div id = "selectfd"> </div>
-	<br>
-    <label id = "addtxt"> Thêm món khác </label>
+	 <label id = "addtxt"> Thêm món khác </label>
     <input id = "addfd"> 
     <br> 
     <button id="addbtn" onclick = "addfood()"> THÊM MÓN</button>
     <br><br>
+	<div id = "selectfd"> </div>
+	<br>
+  
 	<button id="submitbtn" onclick = "finish()"> XONG RỒI NÈKKK </button>
 	<br>
 	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7310599997431097"
@@ -155,19 +156,17 @@
             picked = 100000,
             oldpick = [],
             color = d3.scale.category20();
-        var f = [["Bò sốt hẻm", "Lẩu bò", "Bò nướng", "Bò né", "Bún bò"],
-				 ["Bánh canh cá", "Gỏi cá mai", "Cá nướng", "Cá hấp", "Bún cá"],
-				 ["Bánh canh cua", "Ghẹ hấp", "Ghẹ nướng phô mai", "Lẩu cua", "Bún riêu", "Ghẹ rang me", "Súp cua"],
+        var f = [["Bò sốt", "Lẩu bò", "Bò nướng", "Bò né", "Bún bò"],
+				 ["Bánh canh cá", "Bún cá"],
+				 ["Bánh canh cua", "Ghẹ nướng phô mai", "Lẩu cua", "Bún riêu"],
 				 ["Gà rán", "Gà nướng", "Lẩu gà", "Cơm gà"],
 				 ["Bún nem", "Nem nướng", "Thịt nướng", "Bún đậu XÌ DẦU"],
-				 ["Salad", "Gỏi"],
-				 ["Trứng tan", "Trứng cút lộn rang me", "Bánh tráng nướng", "Bột chiên"],
-				 ["Tôm nướng phô mai", "Tôm nướng", "Tôm hấp", "Lẩu tôm"],
+				 ["Tôm nướng phô mai"],
 				 ["7749 món ốc", "Bún ốc", "Pizza", "Hamburger", "BBQ"],
                  []];
 		var haha = [], data = [], cnt = 0;
         divsl = document.getElementById("selectfd");
-        for (i = 0; i <= 9; ++i) {
+        for (i = 0; i <= 6; ++i) {
             f[i].forEach(addcheckbox);
         }
         function addfood() {
